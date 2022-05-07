@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">DoSome</string>
+    <string name="no_data">no data</string>
+    
+    <string-array name="priorities">
+        <item>high priority</item>
+        <item>medium priority</item>
+        <item>low priority</item>
+    </string-array>
+</resources>
