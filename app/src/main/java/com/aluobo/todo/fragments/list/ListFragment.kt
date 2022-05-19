@@ -2,8 +2,10 @@ package com.aluobo.todo.fragments.list
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -11,6 +13,7 @@ import com.aluobo.todo.R
 import com.aluobo.todo.data.models.ToDoData
 import com.aluobo.todo.data.viewmodel.ToDoViewModel
 import com.aluobo.todo.databinding.FragmentListBinding
+import com.aluobo.todo.util.hideKeyboard
 import com.google.android.material.snackbar.Snackbar
 
 class ListFragment : Fragment(R.layout.fragment_list) {
@@ -30,12 +33,16 @@ class ListFragment : Fragment(R.layout.fragment_list) {
             layoutManager = LinearLayoutManager(requireContext())
         }
 
-        toDoViewModel.getAllData.observe(viewLifecycleOwner) {
-            toDoListAdapter.submitList(ArrayList(it))
+        lifecycleScope.launchWhenResumed {
+            toDoViewModel.getAllData.collect{
+                toDoListAdapter.submitList(ArrayList(it))
+                Toast.makeText(requireContext(), "7777", Toast.LENGTH_SHORT).show()
+            }
         }
 
         // set recycler view  swipe to delete
         swipeToDelete(binding.recyclerView)
+        hideKeyboard(requireActivity())
     }
 
     override fun onDestroy() {

@@ -3,9 +3,10 @@ package com.aluobo.todo.data.repository
 import androidx.lifecycle.LiveData
 import com.aluobo.todo.data.ToDoDao
 import com.aluobo.todo.data.models.ToDoData
+import kotlinx.coroutines.flow.Flow
 
 class ToDoRepository(private val toDoDao: ToDoDao) {
-    val getAllData: LiveData<List<ToDoData>> = toDoDao.getAllData()
+    val getAllData: Flow<List<ToDoData>> = toDoDao.getAllData()
 
     suspend fun insertData(toDoData: ToDoData) = toDoDao.insertData(toDoData = toDoData)
 
